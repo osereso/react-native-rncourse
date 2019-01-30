@@ -1,29 +1,25 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {Platform, StyleSheet, Text, View, TextInput, Button} from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
-
+import ListItem from './src/components/ListItem/ListItem';
+import PlaceInput from "./src/components/PlaceInput/PlaceInput";
+import PlaceList from "./src/components/PlaceList/PlaceList";
 
 export default class App extends Component {
 
-  state ={
+  state = {
     placeName: '',
     places: []
   }
+
+  placeAddedHandler = placeName => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(placeName)
+      };
+    });
+  };
+
 
   placeNameChangeHandler = val => {
     this.setState({
@@ -43,66 +39,21 @@ export default class App extends Component {
   }
 
   render() {
-    const placesOutput = this.state.places.map((place, i) => <Text key={i}>{place}</Text>
-    );
     return (
       <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <TextInput 
-          value={this.state.placeName}
-          style={styles.placeInput}
-          placeholder="An awesome place"
-          onChangeText={this.placeNameChangeHandler}
-          />
-          <Button title= "Add" style={styles.placeButton} onPress={this.placeSubmitHandler} />
-        </View>
-        <View>{placesOutput}</View>
-
-        <Text style={styles.welcome}>Welcome, Győző!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <PlaceInput onPlaceAdded={this.placeAddedHandler} />
+        <PlaceList places={this.state.places} />
       </View>
     );
   }
 }
 
-
 const styles = StyleSheet.create({
-  
   container: {
     flex: 1,
-    padding: 50,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-
-  inputContainer: {
-    //flex: 1,
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-
-  placeInput: {
-    width: "70%"
-  },
-
-  placeButton: {
-    width: "30%"
-  },
-
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-
+    padding: 26,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start"
+  }
 });
