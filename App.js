@@ -33,16 +33,18 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native, Gy!</Text>
+        <View style={styles.inputContainer}>
+          <TextInput 
+          value={this.state.placeName}
+          style={styles.placeInput}
+          placeholder="An awesome place"
+          onChangeText={this.placeNameChangeHandler}
+          />
+          <Button title= "Add" style={styles.placeButton} />
+        </View>
+
+        <Text style={styles.welcome}>Welcome, Győző!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
-
-        <TextInput 
-        value={this.state.placeName}
-        style={{height: 40, width: 300}}
-        placeholder="An awesome place"
-        onChangeText={this.placeNameChangeHandler}
-        />
-
         <Text style={styles.instructions}>{instructions}</Text>
       </View>
     );
@@ -51,6 +53,7 @@ export default class App extends Component {
 
 
 const styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     padding: 50,
@@ -58,14 +61,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
   },
+
+  inputContainer: {
+    //flex: 1,
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+
+  placeInput: {
+    width: "70%"
+  },
+
+  placeButton: {
+    width: "30%"
+  },
+
   welcome: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
   },
+
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+
 });
