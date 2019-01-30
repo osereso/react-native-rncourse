@@ -21,7 +21,8 @@ const instructions = Platform.select({
 export default class App extends Component {
 
   state ={
-    placeName: ''
+    placeName: '',
+    places: []
   }
 
   placeNameChangeHandler = val => {
@@ -30,7 +31,20 @@ export default class App extends Component {
     });
   }
 
+  placeSubmitHandler = () => {
+    if (this.state.placeName.trim() === "") {
+      return;
+    }
+    this.setState(prevState => {
+      return {
+        places: prevState.places.concat(prevState.placeName)
+      };
+    } )
+  }
+
   render() {
+    const placesOutput = this.state.places.map((place, i) => <Text key={i}>{place}</Text>
+    );
     return (
       <View style={styles.container}>
         <View style={styles.inputContainer}>
@@ -40,8 +54,9 @@ export default class App extends Component {
           placeholder="An awesome place"
           onChangeText={this.placeNameChangeHandler}
           />
-          <Button title= "Add" style={styles.placeButton} />
+          <Button title= "Add" style={styles.placeButton} onPress={this.placeSubmitHandler} />
         </View>
+        <View>{placesOutput}</View>
 
         <Text style={styles.welcome}>Welcome, Győző!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
